@@ -17,7 +17,7 @@ export default function Home() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     iframeRef.current?.contentWindow?.postMessage(
       JSON.stringify({ key }),
-      "http://localhost:3001",
+      "https://child-keep-alive.vercel.app",
     );
     setStatus("Posted");
   }, []);
@@ -31,7 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     const listener = async (e: MessageEvent) => {
-      if (e.origin !== "http://localhost:3001") return;
+      if (e.origin !== "https://child-keep-alive.vercel.app") return;
       setStatus("Received from Child");
       await new Promise((resolve) => setTimeout(resolve, 1500));
       triggerKeepAlive();
@@ -73,7 +73,7 @@ export default function Home() {
           <div className="flex h-[75dvh] w-full overflow-hidden px-20 py-4">
             <iframe
               ref={iframeRef}
-              src="http://localhost:3001"
+              src="https://child-keep-alive.vercel.app"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               className="h-full grow rounded-lg shadow-md"
             ></iframe>
